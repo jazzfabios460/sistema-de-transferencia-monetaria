@@ -12,6 +12,7 @@ export default function PrivateRoute({children}:any) {
     const n = useNavigate()
     
     const token = userAuthenticateStorage?.token ? userAuthenticateStorage?.token : null
+    
     useEffect(()=>{
       async function getAuth() {
         setLoading(true)
@@ -19,8 +20,6 @@ export default function PrivateRoute({children}:any) {
         if (auth.status === 200) {
             setTokenValid(true)
             n("/")
-        }else{
-          n("/signin")
         }
         setLoading(false)
       }

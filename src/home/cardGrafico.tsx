@@ -17,7 +17,7 @@ export default function CardGrafico({transferencia}:{transferencia:transacoesTyp
   let mes = parseInt(value?.month().toString() || "") + 1
   let ano = value?.year()
   let data = {dia,mes,ano}
-  console.log(data)
+  
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
