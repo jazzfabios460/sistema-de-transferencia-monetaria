@@ -11,6 +11,7 @@ import { getUserAll } from '../api/userApi';
 import { usersType } from '../types';
 import AutocompleteAsync from './autocomplete';
 import { transferenciaApi } from '../api/account';
+import LoaddingButton from '../loaddingButton';
 
 export default function CardTransferencia({account}:any) {
   const [users, setUsers] = useState<any>()
@@ -18,6 +19,7 @@ export default function CardTransferencia({account}:any) {
   const [errorValor, seterrorValor] = useState(false)
   const [errorUsers, seterrorUsers] = useState(false)
   const [list, setlist] = useState<usersType[]>([])
+  const [loadding, setloadding] = useState(false)
 
   async function getUsers() {
     const u = await getUserAll()
@@ -28,10 +30,11 @@ export default function CardTransferencia({account}:any) {
   },[])
   
   const transfer = async()=>{
+    setloadding(true)
     if (users && valor && numberValid(valor)) {
       seterrorUsers(false)
       seterrorValor(false)  
-      const response = await transferenciaApi(account?.id,users?.id, valor)
+      const response = await transferenciaApi(account?.id,users?.id, VirgulaToPonto(valor))
       alert(response.toString())
       window.location.reload()
     }
@@ -45,12 +48,13 @@ export default function CardTransferencia({account}:any) {
     }else{
       seterrorValor(false)
     }
+    setloadding(false)
   }
   return (
     <Card sx={{ minWidth: 275 }}>
       <h1>Área de transferência</h1>
       <CardContent sx={{display:'flex', flexDirection:"column", maxWidth:"400px", marginTop:2}}>
-        <AutocompleteAsync setUsers={setUsers} errorUsers={errorUsers} list={list}/>
+        <AutocompleteAsync setUsers={setUsers} errorUsers={errorUsers} list={list} account={account}/>
         {errorUsers && <Typography sx={{textAlign:"start"}} color={'error'}>O campo  usuário não pode estar em branco!</Typography>}
 
         <TextField 
@@ -63,7 +67,11 @@ export default function CardTransferencia({account}:any) {
         
       </CardContent>
       <CardActions sx={{display:"flex", justifyContent:"flex-end"}}>
-        <Button onClick={transfer}  variant='contained'>Transferir</Button>
+        {
+          loadding ?
+          <Button variant='contained' sx={{width:"130px"}}><LoaddingButton/></Button>:
+          <Button onClick={transfer} sx={{width:"130px"}} variant='contained'>Transferir</Button>
+        }
       </CardActions>
     </Card>
   );

@@ -50,9 +50,6 @@ export default function Register() {
     let emailValid:any = setErroEmail(emailValidation(data.get('email')))
     let nameValid:any = seterrorName(nameValidation(data.get('name')))
     let passwordValid:any = seterrorPassword(passwordValidation(data.get('password')))
-    console.log({
-      emailValid, nameValid, passwordValid
-    })
     if (data.get('email') && data.get('name') && data.get('password')) {     
         const resRegister = await registerApi(data.get('email'),data.get('name'),data.get('password'))
         alert(resRegister)
@@ -131,8 +128,9 @@ export default function Register() {
 
               />
               <FormControlLabel
+                sx={{display:"flex", justifyContent:"flex-start"}}
                 control={<Checkbox value="remember" color="primary" />}
-                label="Relembrar senha"
+                label="Relembrar"
               />
               <Button
                 type="submit"

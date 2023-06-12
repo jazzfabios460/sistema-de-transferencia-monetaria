@@ -117,8 +117,9 @@ export default function SignIn() {
 
               />
               <FormControlLabel
+                sx={{display:"flex", justifyContent:"flex-start"}}
                 control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+                label="Relembrar"
               />
               <Button
                 type="submit"

@@ -20,8 +20,8 @@ import CardSaldo from './cardSaldo';
 import './home.css'
 import { getAccountByIdApi, getTransferenciaApi } from '../api/account';
 import { transacoesTypes, userAuthType, usersType } from '../types';
-import { removerDuplicataArrayDeObjetos } from '../metodosUteis';
 import { removerUsuarioApi } from '../api/userApi';
+import ModalDelete from './modalDelete';
 interface Props {
   /**
    * Injected by the documentation to work in an iframe.
@@ -41,22 +41,18 @@ export default function DrawerAppBar(props: Props) {
     const a:usersType = await getAccountByIdApi(userAuthenticateStorage.usuario?.conta[0].id)
     const t = await getTransferenciaApi()
     const transfFilter = t.filter((e:transacoesTypes)=>{
-       if (e.id_conta_pagador[0] === a.id || e.id_conta_recebidor[0] === a.id) {
-         return e
-       }
+      if (e.id_conta_pagador[0] === a.id || e.id_conta_recebidor[0] === a.id) {
+        return e
+      }
     })
     setAccaount(a)
     setTransferencia(transfFilter)
   }
-  
-  async function getTransference() {
-    
-  }
+
   useEffect(() => {
     getAcountById()
   }, [])
-  
-  
+    
   const loggof = ()=>{
     localStorage.removeItem("token")
     window.location.reload()
@@ -68,7 +64,7 @@ export default function DrawerAppBar(props: Props) {
     window.location.reload()
   }
 
-  const navItems = ['Home', <div onClick={deletarConta}>Remover conta</div>, <div onClick={loggof}>sair</div>];
+  const navItems = [<ModalDelete deletarConta={deletarConta}/>, <div onClick={loggof}>sair</div>];
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };

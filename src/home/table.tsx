@@ -27,7 +27,15 @@ var rows:{
 
 
 
-export default function BasicTable({transferencia}:{transferencia:transacoesTypes[]}) {
+type propsTableType = {
+  transferencia:transacoesTypes[],
+  data:{
+    dia: number | undefined,
+    mes: number,
+    ano: number | undefined
+  }
+}
+export default function BasicTable({transferencia,data}:propsTableType) {
 
     transferencia.map((e)=>{
        rows.push({
@@ -37,7 +45,17 @@ export default function BasicTable({transferencia}:{transferencia:transacoesType
         dataTransferencia:e.data
        })
     })
+    let newData = data.ano+`-${data.mes < 10 && '0'}`+data.mes+"-"+data.dia
+    
     rows = removerDuplicataArrayDeObjetos(rows.reverse())
+    let lista = rows.filter((e)=>{
+      if(e.dataTransferencia.includes(newData)){
+          return e
+      }
+    })
+    if (data.ano) {
+      rows = lista
+    }
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">

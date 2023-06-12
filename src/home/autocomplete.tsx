@@ -15,11 +15,10 @@ function sleep(delay = 0) {
   });
 }
 
-export default function AutocompleteAsync({setUsers,list,errorUsers}:any) {
+export default function AutocompleteAsync({setUsers,list,errorUsers, account}:any) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<readonly Film[]>([]);
   const loading = open && options.length === 0;
-  const [inputValue, setInputValue] = React.useState('');
   React.useEffect(() => {
     let active = true;
 
@@ -48,10 +47,12 @@ export default function AutocompleteAsync({setUsers,list,errorUsers}:any) {
 
   const listUsers:any = [];
   list.map((e:usersType)=>{
-    listUsers.push({
-        title:e.usuario.nome,
-        id:e.id
-    })
+    if (account?.usuario.nome !== e?.usuario.nome) {     
+      listUsers.push({
+          title:e.usuario.nome,
+          id:e.id
+      })
+    }
   })
 
   return (
