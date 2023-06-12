@@ -16,6 +16,8 @@ import { signInApi } from '../api/auth';
 import {useNavigate} from 'react-router-dom'
 import { setUserAuthenticateStorage, userAuthenticateStorage } from '../userAuthenticate';
 import LoaddingButton from '../loaddingButton';
+import { registerApi } from '../api/userApi';
+import { emailValidation, nameValidation, passwordValidation } from '../metodosUteis';
 
 
 function Copyright(props: any) {
@@ -34,29 +36,29 @@ function Copyright(props: any) {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export default function Register() {
   const n = useNavigate()
   const [loadding, setLoadding] = useState(false)
-  const [erro, setErro] = useState(false)
+  const [erroEmail, setErroEmail] = useState(false)
+  const [errorPassword, seterrorPassword] = useState(false)
+  const [errorName, seterrorName] = useState(false)
   const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
     setLoadding(true)
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const resLogin = await signInApi(data.get('email'),data.get('password'))
-    if (resLogin?.token) {
-      setUserAuthenticateStorage(resLogin)
-      window.location.reload()
-    }else{
-      setLoadding(false)
-      alert("usuário ou senha inválidos")
-      setErro(true)
+
+    let emailValid:any = setErroEmail(emailValidation(data.get('email')))
+    let nameValid:any = seterrorName(nameValidation(data.get('name')))
+    let passwordValid:any = seterrorPassword(passwordValidation(data.get('password')))
+    console.log({
+      emailValid, nameValid, passwordValid
+    })
+    if (data.get('email') && data.get('name') && data.get('password')) {     
+        const resRegister = await registerApi(data.get('email'),data.get('name'),data.get('password'))
+        alert(resRegister)
     }
+    setLoadding(false)
   };
-  if (userAuthenticateStorage) {
-    setTimeout(() => {
-      n("/")
-    }, 500);
-  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -89,8 +91,8 @@ export default function SignIn() {
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5" >
-              login
+            <Typography component="h1" variant="h5">
+              Cadastro
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
@@ -98,27 +100,39 @@ export default function SignIn() {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Email"
                 name="email"
                 autoComplete="email"
                 autoFocus
-                error={erro}
+                error={erroEmail}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="name"
+                label="Nome"
+                type="text"
+                id="name"
+                autoComplete="current-password"
+                error={errorName}
+
               />
               <TextField
                 margin="normal"
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="Senha"
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                error={erro}
+                error={errorPassword}
 
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+                label="Relembrar senha"
               />
               <Button
                 type="submit"
@@ -129,18 +143,18 @@ export default function SignIn() {
                 {
                   loadding?
                   <LoaddingButton/>:
-                  "Logar"
+                  "Cadastrar"
                 }
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link href="/signin" variant="body2">
                     
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/register" variant="body2">
-                    {"Não é cadastrado? registre-se aqui"}
+                  <Link href="/signin" variant="body2">
+                    Voltar a tela de login
                   </Link>
                 </Grid>
               </Grid>

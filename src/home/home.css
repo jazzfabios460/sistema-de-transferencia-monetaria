@@ -1,0 +1,11 @@
+.cardsMainSup{
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    gap:20px;
+    margin-bottom: 20px;
+}
+@media (max-width:700px) {
+    .cardsMainSup{
+        grid-template-columns: 1fr;
+    }
+}
