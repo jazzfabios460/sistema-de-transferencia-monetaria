@@ -13,16 +13,16 @@ export default function PrivateRoute({children}:any) {
     
     const token = userAuthenticateStorage?.token ? userAuthenticateStorage?.token : null
     
-    useEffect(()=>{
-      async function getAuth() {
-        setLoading(true)
-        const auth = await authApi(token)
-        if (auth.status === 200) {
-            setTokenValid(true)
-            n("/")
-        }
-        setLoading(false)
+    async function getAuth() {
+      setLoading(true)
+      const auth = await authApi(token)
+      if (auth.status === 200) {
+          setTokenValid(true)
+          n("/")
       }
+      setLoading(false)
+    }
+    useEffect(()=>{
       getAuth()
     },[n, token])
     

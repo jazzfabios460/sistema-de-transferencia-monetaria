@@ -17,9 +17,15 @@ export default function ModalDelete({deletarConta}:any) {
     setOpen(false);
   };
 
+  const styleBtn = {
+    color:"white",
+    "@media(max-width:700px)":{
+      color:"red"
+    }
+  }
   return (
     <div>
-      <Button variant="outlined" sx={{color:"white"}} onClick={handleClickOpen}>
+      <Button variant="outlined" sx={styleBtn} onClick={handleClickOpen}>
         Remover Conta
       </Button>
       <Dialog

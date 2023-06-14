@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function Loading() {
   return (
-    <div>Loading...</div>
+    <h2 style={{marginTop:"100px"}}>Carregando...</h2>
   )
 }

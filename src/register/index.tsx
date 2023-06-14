@@ -12,12 +12,10 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { signInApi } from '../api/auth';
 import {useNavigate} from 'react-router-dom'
-import { setUserAuthenticateStorage, userAuthenticateStorage } from '../userAuthenticate';
 import LoaddingButton from '../loaddingButton';
 import { registerApi } from '../api/userApi';
-import { emailValidation, nameValidation, passwordValidation } from '../metodosUteis';
+//import { emailValidation, nameValidation, passwordValidation } from '../metodosUteis';
 
 
 function Copyright(props: any) {
@@ -47,9 +45,9 @@ export default function Register() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    let emailValid:any = setErroEmail(emailValidation(data.get('email')))
-    let nameValid:any = seterrorName(nameValidation(data.get('name')))
-    let passwordValid:any = seterrorPassword(passwordValidation(data.get('password')))
+    // let emailValid:any = setErroEmail(emailValidation(data.get('email')))
+    // let nameValid:any = seterrorName(nameValidation(data.get('name')))
+    // let passwordValid:any = seterrorPassword(passwordValidation(data.get('password')))
     if (data.get('email') && data.get('name') && data.get('password')) {     
         const resRegister = await registerApi(data.get('email'),data.get('name'),data.get('password'))
         alert(resRegister)

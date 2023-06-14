@@ -64,7 +64,7 @@ export default function DrawerAppBar(props: Props) {
     window.location.reload()
   }
 
-  const navItems = [<ModalDelete deletarConta={deletarConta}/>, <div onClick={loggof}>sair</div>];
+  const navItems = [<ModalDelete deletarConta={deletarConta}/>, <div  onClick={loggof}>sair</div>];
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
@@ -72,7 +72,7 @@ export default function DrawerAppBar(props: Props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+        Dados do usuário
       </Typography>
       <Divider />
       <List>

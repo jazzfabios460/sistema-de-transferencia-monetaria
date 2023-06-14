@@ -51,10 +51,10 @@ export function removerDuplicataArrayDeObjetos(arrayDeObjetos:any){
   }
 
   export function formatoDeData(data:string) {
-    const ano = data.split("-")[0]
-    const mes = data.split("-")[1]
-    const dia = data.split("-")[2].split("T")[0]
-    const hora = data.split("T")[1]
+    const ano = data?.split("-")[0]
+    const mes = data?.split("-")[1]
+    const dia = data?.split("-")[2]?.split("T")[0]
+    const hora = data?.split("T")[1]
 
 
     return dia + "/" + mes + "/" + ano
