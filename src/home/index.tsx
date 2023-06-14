@@ -22,6 +22,7 @@ import { getAccountByIdApi, getTransferenciaApi } from '../api/account';
 import { transacoesTypes, userAuthType, usersType } from '../types';
 import { removerUsuarioApi } from '../api/userApi';
 import ModalDelete from './modalDelete';
+import Footer from './footer';
 interface Props {
   /**
    * Injected by the documentation to work in an iframe.
@@ -146,6 +147,7 @@ export default function DrawerAppBar(props: Props) {
           <div>
             <CardGrafico transferencia={transferencia}/>
           </div>
+          <Footer/>
         </Typography>
       </Box>
     </Box>
